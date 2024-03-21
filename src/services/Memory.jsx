@@ -33,15 +33,23 @@ const listaMock = [
         completed: 340,
     },
 ];
-const memory = localStorage.getItem("goals");
-const initialState = memory
-    ? JSON.parse(memory)
-    : {
-          order: [],
-          objects: {},
-      };
 
-const reducer = (state = initialState, action) => {
+const initialState = () => {
+    const memory = localStorage.getItem("goals");
+    if (memory) {
+        return JSON.parse(memory);
+    } else {
+        return {
+            order: listaMock.map((goal) => goal.id),
+            objects: listaMock.reduce(
+                (object, goal) => ({ ...object, [goal.id]: goal }),
+                {}
+            ),
+        };
+    }
+};
+
+const reducer = (state, action) => {
     switch (action.type) {
         case "put": {
             const goals = action.goals;
@@ -97,12 +105,16 @@ const reducer = (state = initialState, action) => {
             return state;
     }
 };
-// const goals = reducer(initialState, { type: "put", goals: listaMock });
-export const ContextGoals = createContext(listaMock);
+
+export const ContextGoals = createContext();
 
 const Memory = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    console.log("Estado global de objetos:", state.objects);
+    const [state, dispatch] = useReducer(reducer, initialState());
+
+    useEffect(() => {
+        localStorage.setItem("goals", JSON.stringify(state));
+    }, [state]);
+
     return (
         <ContextGoals.Provider value={[state, dispatch]}>
             {children}
