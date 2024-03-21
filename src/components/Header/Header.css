@@ -1,0 +1,6 @@
+.mainHeader {
+    @apply flex justify-between items-center py-4 px-6;
+}
+.logo {
+    @apply flex items-center gap-3;
+}

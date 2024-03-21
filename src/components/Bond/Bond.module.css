@@ -1,0 +1,9 @@
+.icon {
+    @apply h-5 w-5 text-gray-900;
+}
+.vinculo {
+    @apply flex items-center px-4 h-xl hover:bg-gray-200;
+}
+.text {
+    @apply text-sm ml-2 font-semibold text-gray-900;
+}
