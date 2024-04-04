@@ -8,7 +8,7 @@ const Header = () => {
             <div className="logo">
                 <img src={logo} className="h-12"></img>
                 <a href="/" className="uppercase font-semibold">
-                    Metas App
+                    Goals App
                 </a>
             </div>
             <nav>
